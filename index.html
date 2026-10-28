@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="薛登高的个人简历">
+<meta name="description" content="薛登高的个人简历 / Résumé of Denggao Xue">
 <title>薛登高的简历</title>
 <style>
-/* Layout: one narrow reading column like a plain Markdown page; on wide screens the dates of each entry hang in a left gutter */
+/* Layout: one narrow reading column like a plain Markdown page; on wide screens the dates of each entry hang in a left gutter. Two complete language versions, one shown at a time. */
 :root {
   --bg: #fbfbfa;
   --fg: #1c2127;
@@ -14,8 +14,8 @@
   --rule: #e2e5e8;
   --accent: #2c4e85;
   --tint: #eef2f8;
-  --f-display: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
-  --f-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --f-display: "Noto Serif SC", Georgia, "Songti SC", "STSong", "SimSun", serif;
+  --f-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
@@ -29,6 +29,7 @@
   color-scheme: dark;
 }
 
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -44,7 +45,7 @@ body {
   margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 3.5rem 4rem;
+  padding-block: 3rem 4rem;
   display: flex;
   flex-direction: column;
   gap: 2.75rem;
@@ -57,6 +58,7 @@ b { font-weight: 600; }
 
 /* ---------- Masthead ---------- */
 .masthead { display: flex; flex-direction: column; gap: .9rem; }
+.topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1rem; }
 .eyebrow {
   margin: 0;
   font-family: var(--f-mono);
@@ -65,6 +67,18 @@ b { font-weight: 600; }
   text-transform: uppercase;
   color: var(--muted);
 }
+.lang-btn {
+  font: inherit;
+  font-size: .85rem;
+  line-height: 1.4;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: .3rem .95rem;
+  cursor: pointer;
+}
+.lang-btn:hover { background: var(--tint); }
 h1 {
   margin: 0;
   font-family: var(--f-display);
@@ -78,7 +92,7 @@ h1 {
   gap: .2em .6em;
   text-wrap: balance;
 }
-h1 .en {
+h1 .alt {
   font-family: var(--f-body);
   font-weight: 400;
   font-size: .42em;
@@ -124,6 +138,12 @@ p { margin: 0; }
 ul, ol { margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: .3rem; }
 li::marker { color: var(--muted); font-family: var(--f-mono); font-size: .85em; }
 
+/* English version: tighter tracking for Latin text */
+.page[lang="en"] { line-height: 1.7; }
+.page[lang="en"] h1 { letter-spacing: .01em; }
+.page[lang="en"] h2 { letter-spacing: .01em; }
+.page[lang="en"] .motto { letter-spacing: 0; font-style: italic; }
+
 /* 自我评价 */
 .lead { font-size: 1.1rem; }
 
@@ -139,7 +159,7 @@ li::marker { color: var(--muted); font-family: var(--f-mono); font-size: .85em; 
 }
 
 /* 联系方式 */
-.contact { margin: 0; display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .5rem 1rem; align-items: center; }
+.contact { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .5rem 1.2rem; align-items: center; }
 .contact dt { color: var(--muted); }
 .contact dd { margin: 0; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; }
 .addr { font-family: var(--f-mono); font-size: .95rem; overflow-wrap: anywhere; }
@@ -158,6 +178,7 @@ li::marker { color: var(--muted); font-family: var(--f-mono); font-size: .85em; 
 /* 个人履历 */
 .timeline { list-style: none; padding: 0; gap: 1.8rem; }
 .entry { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: .25rem 1.5rem; }
+.page[lang="en"] .entry { grid-template-columns: 11rem minmax(0, 1fr); }
 .when {
   font-family: var(--f-mono);
   font-size: .82rem;
@@ -176,10 +197,10 @@ li::marker { color: var(--muted); font-family: var(--f-mono); font-size: .85em; 
 .cite { gap: .7rem; font-size: .95rem; line-height: 1.7; overflow-wrap: anywhere; }
 .cite i { font-style: italic; }
 .me { font-weight: 700; }
+.note { color: var(--muted); font-size: .88em; }
 .doi { font-family: var(--f-mono); font-size: .8rem; white-space: nowrap; margin-left: .3em; }
 .projects { gap: .8rem; }
-.projects li { display: flex; flex-direction: column; }
-.kind { font-size: .8rem; color: var(--muted); letter-spacing: .02em; }
+.kind { display: block; font-size: .8rem; color: var(--muted); letter-spacing: .02em; }
 
 /* 页脚 */
 footer {
@@ -194,8 +215,8 @@ footer {
 footer .addr { font-size: .82rem; }
 
 @media (max-width: 560px) {
-  .page { padding-block: 2.25rem 3rem; gap: 2.25rem; }
-  .entry { grid-template-columns: minmax(0, 1fr); }
+  .page { padding-block: 2rem 3rem; gap: 2.25rem; }
+  .entry, .page[lang="en"] .entry { grid-template-columns: minmax(0, 1fr); }
   .when { padding-top: 0; }
   .motto { font-size: 1.3rem; }
 }
@@ -203,11 +224,15 @@ footer .addr { font-size: .82rem; }
 </style>
 </head>
 <body>
-<main class="page">
+<!-- ==================== 中文版 ==================== -->
+<main class="page" id="zh" lang="zh-CN">
 
   <header class="masthead">
-    <p class="eyebrow">简历 · Résumé</p>
-    <h1><span class="cn">薛登高</span><span class="en">Denggao Xue</span></h1>
+    <div class="topbar">
+      <p class="eyebrow">简历 · Résumé</p>
+      <button class="lang-btn" id="to-en" type="button" data-lang="en" lang="en" aria-label="Switch to English">English</button>
+    </div>
+    <h1><span>薛登高</span><span class="alt" lang="en">Denggao Xue</span></h1>
     <p class="meta">更新日期：<time datetime="2026-10-28">2026年10月28日</time></p>
     <nav class="toc" aria-label="本页目录">
       <a href="#about">自我评价</a>
@@ -236,7 +261,7 @@ footer .addr { font-size: .82rem; }
       <dt>邮箱</dt>
       <dd>
         <a class="addr" id="email-addr" href="mailto:dengg.xue@nwafu.edu.cn">dengg.xue@nwafu.edu.cn</a>
-        <button class="btn" id="copy-email" type="button" data-copy="dengg.xue@nwafu.edu.cn" data-target="email-addr">复制</button>
+        <button class="btn" id="copy-email" type="button" data-copy="dengg.xue@nwafu.edu.cn" data-target="email-addr" data-done="已复制" data-fail="已选中，请手动复制">复制</button>
       </dd>
       <dt>主页</dt>
       <dd><a class="addr" href="https://xuedenggao.github.io">xuedenggao.github.io</a></dd>
@@ -318,31 +343,183 @@ footer .addr { font-size: .82rem; }
 
 </main>
 
+<!-- ==================== English version ==================== -->
+<main class="page" id="en" lang="en" hidden>
+
+  <header class="masthead">
+    <div class="topbar">
+      <p class="eyebrow">Résumé</p>
+      <button class="lang-btn" id="to-zh" type="button" data-lang="zh" lang="zh-CN" aria-label="切换到中文">中文</button>
+    </div>
+    <h1><span>Denggao Xue</span><span class="alt" lang="zh-CN">薛登高</span></h1>
+    <p class="meta">Updated <time datetime="2026-10-28">October 28, 2026</time></p>
+    <nav class="toc" aria-label="On this page">
+      <a href="#en-about">About</a>
+      <a href="#en-contact">Contact</a>
+      <a href="#en-history">Experience &amp; Education</a>
+      <a href="#en-english">English</a>
+      <a href="#en-papers">Publications</a>
+      <a href="#en-patents">Patents</a>
+      <a href="#en-projects">Research Projects</a>
+    </nav>
+  </header>
+
+  <section id="en-about" aria-labelledby="en-h-about">
+    <h2 id="en-h-about">About Me</h2>
+    <p class="lead">As my name suggests (Denggao means “to climb high”), the climb never ends!</p>
+  </section>
+
+  <section id="en-motto" aria-labelledby="en-h-motto">
+    <h2 id="en-h-motto">Motto</h2>
+    <p class="motto">“Taming oneself, through self-education, is a lifelong required course!”</p>
+  </section>
+
+  <section id="en-contact" aria-labelledby="en-h-contact">
+    <h2 id="en-h-contact">Contact</h2>
+    <dl class="contact">
+      <dt>Email</dt>
+      <dd>
+        <a class="addr" id="en-email-addr" href="mailto:dengg.xue@nwafu.edu.cn">dengg.xue@nwafu.edu.cn</a>
+        <button class="btn" id="en-copy-email" type="button" data-copy="dengg.xue@nwafu.edu.cn" data-target="en-email-addr" data-done="Copied" data-fail="Selected, copy manually">Copy</button>
+      </dd>
+      <dt>Homepage</dt>
+      <dd><a class="addr" href="https://xuedenggao.github.io/?lang=en">xuedenggao.github.io</a></dd>
+    </dl>
+  </section>
+
+  <section id="en-history" aria-labelledby="en-h-history">
+    <h2 id="en-h-history">Experience &amp; Education</h2>
+    <ol class="timeline">
+      <li class="entry">
+        <p class="when"><time datetime="2024-04">Apr 2024</time> – <time datetime="2026-04">Apr 2026</time></p>
+        <div class="what">
+          <h3>Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences<span class="role">Research Assistant</span></h3>
+          <ul class="facts">
+            <li><b>Responsibilities</b>: Carbon footprint accounting and verification for new-energy batteries</li>
+          </ul>
+        </div>
+      </li>
+      <li class="entry">
+        <p class="when"><time datetime="2020-09">Sep 2020</time> – <time datetime="2023-06">Jun 2023</time></p>
+        <div class="what">
+          <h3>Northwest A&amp;F University<span class="role">Master’s Student, Landscape Architecture</span></h3>
+          <ul class="facts">
+            <li><b>Research focus</b>: Public perception of and preference for spontaneous groundcover versus conventional lawns</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="en-english" aria-labelledby="en-h-english">
+    <h2 id="en-h-english">English</h2>
+    <p>College English Test, Band 4 (CET-4)</p>
+  </section>
+
+  <section id="en-works" aria-labelledby="en-h-works">
+    <h2 id="en-h-works">Research Output</h2>
+    <div class="works">
+
+      <div id="en-papers">
+        <h3>Publications<span class="count">4</span></h3>
+        <ol class="cite">
+          <li>Danchen Yang, Qi Liu, <span class="me">Denggao Xue</span>, Dongyang Gao, Ling Zhu, Yumeng Ma, Qiang Li, Tian Gao, Ling Qiu. Advancing fine-scale ecological restoration in human-impacted mountain foothills through vegetation-informed biotope mapping and Habitat Quality modeling. <i>Ecological Engineering</i>, 2026, 229: 108003.</li>
+          <li>Huiyi Liang, Cangshuan Li, <span class="me">Denggao Xue</span>, Jiangnan Liu, Kedi Jin, Yuebin Wang, Dongyang Gao, Yingyuan Chen, Yapeng Li, Ling Qiu*, Tian Gao*. Lawn or spontaneous groundcover? Residents’ perceptions of and preferences for alternative lawns in Xianyang, China. <i>Frontiers in Psychology</i>, 2023, 14: 1259920.<a class="doi" href="https://doi.org/10.3389/fpsyg.2023.1259920">DOI</a></li>
+          <li>Cangshuan Li, Huiyi Liang, Dongyang Gao, Yuebin Wang, Kedi Jin, Jiangnan Liu, <span class="me">Denggao Xue</span>, Yingyuan Chen, Yapeng Li, Tian Gao*, Ling Qiu*. Comparative study on the effects of soil quality improvement between urban spontaneous groundcover and lawn. <i>Ecological Indicators</i>, 2023, 148: 110056.</li>
+          <li>Sen Wang, Enzheng Li, <span class="me">Denggao Xue</span>, Ling Qiu, Tian Gao. A comparative study of airborne particulate matter concentrations in park green spaces and plazas and their influencing factors. <i>Yuanlin</i> (园林), 2022, 39(12): 129–134. <span class="note">(in Chinese)</span><a class="doi" href="http://dx.chinadoi.cn/10.12193/j.laing.2022.12.0129.017">DOI</a></li>
+        </ol>
+        <p class="note">* Corresponding author</p>
+      </div>
+
+      <div id="en-patents">
+        <h3>Granted Invention Patents (China)<span class="count">4</span></h3>
+        <ol class="cite">
+          <li>Wei Feng, Lujing Liu, Jie Liu, <span class="me">Denggao Xue</span>, Hang Lei. Method, device and storage medium for accounting the full life-cycle carbon footprint of batteries. CN121094342B, 2026.</li>
+          <li>Wei Feng, Lujing Liu, Jie Liu, <span class="me">Denggao Xue</span>, Hang Lei. Method, device and storage medium for determining the carbon footprint of batteries. CN121094341B, 2026.</li>
+          <li>Wei Feng, Jie Liu, Lujing Liu, <span class="me">Denggao Xue</span>, Hang Lei. Method, device and storage medium for analyzing factors influencing battery carbon emissions. CN121072362B, 2026.</li>
+          <li>Wei Feng, Jie Liu, Lujing Liu, <span class="me">Denggao Xue</span>, Hang Lei. Method, device and storage medium for data quality inspection of carbon footprints. CN121071761B, 2026.</li>
+        </ol>
+      </div>
+
+      <div id="en-projects">
+        <h3>Research Projects (Participant)<span class="count">6</span></h3>
+        <ol class="projects">
+          <li><span class="kind">National Natural Science Foundation of China, General Program</span>Balancing biodiversity conservation and recreational use in urban green spaces: a landscape perception and preference perspective</li>
+          <li><span class="kind">National Natural Science Foundation of China, General Program</span>Application-oriented research on reducing airborne particulate matter concentrations through urban green-space landscapes</li>
+          <li><span class="kind">Shaanxi Provincial Technology Extension Program</span>Key technologies and demonstration for establishing typical high-carbon-sink groundcover communities in the Guanzhong region</li>
+          <li><span class="kind">Shaanxi Qinling Mountains Ecological Scientific Survey Program</span>Biodiversity identification and ecological unit mapping of the northern foothills of the Qinling Mountains (Xi’an section)</li>
+          <li><span class="kind">Shaanxi Academy of Forestry, Science and Technology Innovation Program</span>Building a biodiversity conservation system for the Qinling Mountains based on habitat mapping</li>
+          <li><span class="kind">Shaanxi Academy of Forestry, Science and Technology Innovation Program</span>Key technologies for establishing high-carbon-sink grasslands in the Guanzhong region of Shaanxi</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Denggao Xue</span>
+    <span class="addr">dengg.xue@nwafu.edu.cn</span>
+  </footer>
+
+</main>
+
 <script>
-document.querySelectorAll('[data-copy]').forEach(function (btn) {
-  var original = btn.textContent;
-  btn.addEventListener('click', function () {
-    var text = btn.getAttribute('data-copy');
-    var done = function (msg) {
-      btn.textContent = msg;
-      setTimeout(function () { btn.textContent = original; }, 1800);
-    };
-    var fallback = function () {
-      var el = document.getElementById(btn.getAttribute('data-target'));
-      if (el) {
-        var range = document.createRange();
-        range.selectNodeContents(el);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-      done('已选中，请手动复制');
-    };
-    try {
-      navigator.clipboard.writeText(text).then(function () { done('已复制'); }, fallback);
-    } catch (e) { fallback(); }
+(function () {
+  var KEY = 'resume-lang';
+  var pages = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+  var titles = { zh: '薛登高的简历', en: 'Denggao Xue · Résumé' };
+
+  function show(lang, remember) {
+    if (!pages[lang]) lang = 'zh';
+    pages.zh.hidden = lang !== 'zh';
+    pages.en.hidden = lang !== 'en';
+    document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+    document.title = titles[lang];
+    if (remember) { try { localStorage.setItem(KEY, lang); } catch (e) {} }
+  }
+
+  // 优先级：网址里的 ?lang=en / ?lang=zh  >  上次的选择  >  浏览器语言
+  var initial = null;
+  try { initial = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+  if (!pages[initial]) { try { initial = localStorage.getItem(KEY); } catch (e) {} }
+  if (!pages[initial]) { initial = /^zh/i.test(navigator.language || 'zh') ? 'zh' : 'en'; }
+  show(initial, false);
+
+  document.querySelectorAll('.lang-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var lang = btn.getAttribute('data-lang');
+      show(lang, true);
+      window.scrollTo(0, 0);
+      var other = document.querySelector('#' + lang + ' .lang-btn');
+      if (other) other.focus({ preventScroll: true });
+    });
   });
-});
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    var original = btn.textContent;
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function (msg) {
+        btn.textContent = msg;
+        setTimeout(function () { btn.textContent = original; }, 1800);
+      };
+      var fallback = function () {
+        var el = document.getElementById(btn.getAttribute('data-target'));
+        if (el) {
+          var range = document.createRange();
+          range.selectNodeContents(el);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        done(btn.getAttribute('data-fail'));
+      };
+      try {
+        navigator.clipboard.writeText(text).then(function () { done(btn.getAttribute('data-done')); }, fallback);
+      } catch (e) { fallback(); }
+    });
+  });
+})();
 </script>
 </body>
 </html>
