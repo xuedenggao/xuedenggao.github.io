@@ -67,9 +67,29 @@ b { font-weight: 600; }
   text-transform: uppercase;
   color: var(--muted);
 }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.theme-switch { display: inline-flex; padding: 2px; border: 1px solid var(--rule); border-radius: 999px; }
+.theme-btn {
+  font: inherit;
+  font-size: .8rem;
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: .2rem .65rem;
+  cursor: pointer;
+}
+.theme-btn svg { flex: none; }
+.theme-btn:hover { color: var(--fg); }
+.theme-btn[aria-pressed="true"] { color: var(--accent); background: var(--tint); }
+:root.theme-anim, :root.theme-anim * { transition: background-color .3s ease, color .3s ease, border-color .3s ease !important; }
 .lang-btn {
   font: inherit;
-  font-size: .85rem;
+  font-size: .8rem;
   line-height: 1.4;
   color: var(--accent);
   background: transparent;
@@ -222,6 +242,13 @@ footer .addr { font-size: .82rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
+<script>
+  // 尽早套用上次选的白天/夜间模式，避免打开时闪一下
+  try {
+    var savedTheme = localStorage.getItem('resume-theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.setAttribute('data-theme', savedTheme);
+  } catch (e) {}
+</script>
 </head>
 <body>
 <!-- ==================== 中文版 ==================== -->
@@ -230,7 +257,14 @@ footer .addr { font-size: .82rem; }
   <header class="masthead">
     <div class="topbar">
       <p class="eyebrow">简历 · Résumé</p>
-      <button class="lang-btn" id="to-en" type="button" data-lang="en" lang="en" aria-label="Switch to English">English</button>
+      <div class="controls">
+        <div class="theme-switch" role="group" aria-label="显示模式">
+          <button class="theme-btn" id="zh-theme-light" type="button" data-theme-choice="light" aria-pressed="false" title="白天：浅色背景"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none"/></svg>白天</button>
+          <button class="theme-btn" id="zh-theme-dark" type="button" data-theme-choice="dark" aria-pressed="false" title="夜间：深色背景"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none"/></svg>夜间</button>
+          <button class="theme-btn" id="zh-theme-auto" type="button" data-theme-choice="auto" aria-pressed="true" title="自动：跟随手机或电脑的深色模式设置"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>自动</button>
+        </div>
+        <button class="lang-btn" id="to-en" type="button" data-lang="en" lang="en" aria-label="Switch to English">English</button>
+      </div>
     </div>
     <h1><span>薛登高</span><span class="alt" lang="en">Denggao Xue</span></h1>
     <p class="meta">更新日期：<time datetime="2026-10-28">2026年10月28日</time></p>
@@ -349,7 +383,14 @@ footer .addr { font-size: .82rem; }
   <header class="masthead">
     <div class="topbar">
       <p class="eyebrow">Résumé</p>
-      <button class="lang-btn" id="to-zh" type="button" data-lang="zh" lang="zh-CN" aria-label="切换到中文">中文</button>
+      <div class="controls">
+        <div class="theme-switch" role="group" aria-label="Display mode">
+          <button class="theme-btn" id="en-theme-light" type="button" data-theme-choice="light" aria-pressed="false" title="Light background for daytime"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none"/></svg>Light</button>
+          <button class="theme-btn" id="en-theme-dark" type="button" data-theme-choice="dark" aria-pressed="false" title="Dark background for night"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none"/></svg>Dark</button>
+          <button class="theme-btn" id="en-theme-auto" type="button" data-theme-choice="auto" aria-pressed="true" title="Follow your device’s dark mode setting"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>Auto</button>
+        </div>
+        <button class="lang-btn" id="to-zh" type="button" data-lang="zh" lang="zh-CN" aria-label="切换到中文">中文</button>
+      </div>
     </div>
     <h1><span>Denggao Xue</span><span class="alt" lang="zh-CN">薛登高</span></h1>
     <p class="meta">Updated <time datetime="2026-10-28">October 28, 2026</time></p>
@@ -484,6 +525,37 @@ footer .addr { font-size: .82rem; }
   if (!pages[initial]) { try { initial = localStorage.getItem(KEY); } catch (e) {} }
   if (!pages[initial]) { initial = /^zh/i.test(navigator.language || 'zh') ? 'zh' : 'en'; }
   show(initial, false);
+
+  // 白天 / 夜间 / 自动（自动 = 跟随手机或电脑的深色模式设置）
+  var TKEY = 'resume-theme';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var animTimer = null;
+  function markTheme(mode) {
+    document.querySelectorAll('.theme-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-choice') === mode));
+    });
+  }
+  function applyTheme(mode) {
+    var root = document.documentElement;
+    if (!reduceMotion) {
+      root.classList.add('theme-anim');
+      clearTimeout(animTimer);
+      animTimer = setTimeout(function () { root.classList.remove('theme-anim'); }, 350);
+    }
+    if (mode === 'light' || mode === 'dark') root.setAttribute('data-theme', mode);
+    else root.removeAttribute('data-theme');
+    markTheme(mode);
+    try {
+      if (mode === 'auto') localStorage.removeItem(TKEY);
+      else localStorage.setItem(TKEY, mode);
+    } catch (e) {}
+  }
+  var savedMode = null;
+  try { savedMode = localStorage.getItem(TKEY); } catch (e) {}
+  markTheme(savedMode === 'light' || savedMode === 'dark' ? savedMode : 'auto');
+  document.querySelectorAll('.theme-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { applyTheme(btn.getAttribute('data-theme-choice')); });
+  });
 
   document.querySelectorAll('.lang-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
